@@ -1,0 +1,32 @@
+{
+  "name": "Eisklar - Sicherer Einstieg ins Eisbaden",
+  "short_name": "Eisklar",
+  "description": "Dein 3-Minuten-Guide für einen sicheren Einstieg ins Eisbaden. Eine Initiative von qoob8.",
+  "lang": "de",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f3f0eb",
+  "theme_color": "#f3f0eb",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
