@@ -1,6 +1,6 @@
 "use client";
 
-import { PREP } from "@/lib/content";
+import { useT } from "@/lib/i18n";
 
 type Props = {
   prep: Record<string, boolean>;
@@ -10,16 +10,17 @@ type Props = {
 };
 
 export default function PrepScreen({ prep, allPrep, onToggle, onNext }: Props) {
+  const t = useT();
   return (
     <>
       <h2 className="h2">
-        Erst vorbereiten.{" "}
+        {t.prep.h2a}{" "}
         <br />
-        Dann eintauchen.
+        {t.prep.h2b}
       </h2>
 
       <div className="scroll stack-9">
-        {PREP.map((p) => {
+        {t.PREP.map((p) => {
           const on = !!prep[p.k];
           return (
             <button
@@ -42,7 +43,7 @@ export default function PrepScreen({ prep, allPrep, onToggle, onNext }: Props) {
       </div>
 
       <div className="foot" style={{ paddingTop: 14, display: "flex", flexDirection: "column", gap: 10 }}>
-        {allPrep && <div className="prep-ok">Gut vorbereitet.</div>}
+        {allPrep && <div className="prep-ok">{t.prep.ok}</div>}
         <button
           type="button"
           className="btn btn-primary"
@@ -50,7 +51,7 @@ export default function PrepScreen({ prep, allPrep, onToggle, onNext }: Props) {
           disabled={!allPrep}
           aria-disabled={!allPrep}
         >
-          Weiter zum Einstieg
+          {t.prep.cta}
         </button>
       </div>
     </>

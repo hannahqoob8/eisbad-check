@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { SOURCES, BRAND_DOMAIN } from "@/lib/content";
+import { SOURCES } from "@/lib/content";
+import { useT } from "@/lib/i18n";
 
 type Props = {
   open: boolean;
@@ -9,6 +10,7 @@ type Props = {
 };
 
 export default function SourcesDrawer({ open, onClose }: Props) {
+  const t = useT();
   const sheetRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -56,15 +58,15 @@ export default function SourcesDrawer({ open, onClose }: Props) {
         className="drawer-sheet"
         role="dialog"
         aria-modal="true"
-        aria-label="Quellen und medizinische Hinweise"
+        aria-label={t.drawer.title}
       >
         <div className="drawer-head">
-          <h3 className="drawer-title">Quellen und medizinische Hinweise</h3>
+          <h3 className="drawer-title">{t.drawer.title}</h3>
           <button
             type="button"
             ref={closeRef}
             className="drawer-close"
-            aria-label="Schließen"
+            aria-label={t.drawer.close}
             onClick={onClose}
           >
             ✕
@@ -72,21 +74,18 @@ export default function SourcesDrawer({ open, onClose }: Props) {
         </div>
 
         <div className="drawer-block">
-          <span>Diese Anwendung vermittelt allgemeine Sicherheitsinformationen.</span>
-          <span>Sie ersetzt keine ärztliche Beratung, Diagnose oder Freigabe.</span>
-          <span>
-            Bei gesundheitlichen Beschwerden oder Unsicherheit ist medizinischer
-            Rat einzuholen.
-          </span>
+          {t.drawer.block.map((line) => (
+            <span key={line}>{line}</span>
+          ))}
         </div>
 
         <div className="drawer-meta">
-          <span>Medizinisch geprüft durch: Platzhalter</span>
-          <span>Letzte inhaltliche Prüfung: Platzhalter</span>
-          <span>Version der Inhalte: Platzhalter</span>
+          {t.drawer.meta.map((line) => (
+            <span key={line}>{line}</span>
+          ))}
         </div>
 
-        <div className="drawer-src-label">ORIENTIERUNGSQUELLEN</div>
+        <div className="drawer-src-label">{t.drawer.srcLabel}</div>
         <div className="drawer-src">
           {SOURCES.map((s) => (
             <a key={s.url} href={s.url} target="_blank" rel="noopener noreferrer">
@@ -95,13 +94,13 @@ export default function SourcesDrawer({ open, onClose }: Props) {
           ))}
         </div>
 
-        <div className="drawer-src-label">RECHTLICHES</div>
+        <div className="drawer-src-label">{t.drawer.legalLabel}</div>
         <div className="drawer-src">
-          <a href="impressum/">Impressum →</a>
-          <a href="datenschutz/">Datenschutzerklärung →</a>
+          <a href="impressum/">{t.drawer.impressumLink}</a>
+          <a href="datenschutz/">{t.drawer.datenschutzLink}</a>
         </div>
 
-        <div className="drawer-foot">Eine Initiative von qoob8 · {BRAND_DOMAIN}</div>
+        <div className="drawer-foot">{t.drawer.foot}</div>
       </div>
     </div>
   );

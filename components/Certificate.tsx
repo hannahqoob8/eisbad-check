@@ -1,11 +1,13 @@
 "use client";
 
 import { forwardRef, type CSSProperties } from "react";
-import { CERT } from "@/lib/content";
+import type { CertContent } from "@/lib/i18n";
 
 type Props = {
   name: string;
   dateStr: string;
+  cert: CertContent;
+  dateLabel: string;
 };
 
 const grotesk = "var(--font-schibsted), Helvetica, Arial, sans-serif";
@@ -33,7 +35,7 @@ const monoLabel = (color: string): CSSProperties => ({
  * Feste Pixelmasse (Verhaeltnis ~ 1 : 1.414), damit die Seite 1:1 auf A4 passt.
  */
 const Certificate = forwardRef<HTMLDivElement, Props>(function Certificate(
-  { name, dateStr },
+  { name, dateStr, cert: CERT, dateLabel },
   ref
 ) {
   return (
@@ -99,7 +101,7 @@ const Certificate = forwardRef<HTMLDivElement, Props>(function Certificate(
           {CERT.intro}
         </p>
         <div style={{ ...monoLabel(FAINT), marginTop: 18 }}>
-          Datum: {dateStr}
+          {dateLabel}: {dateStr}
         </div>
       </div>
 

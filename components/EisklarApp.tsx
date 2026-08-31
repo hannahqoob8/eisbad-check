@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { PREP, QUIZ, STEPS } from "@/lib/content";
+import { STEPS } from "@/lib/content";
+import { LangProvider, useT } from "@/lib/i18n";
 import {
   EisklarState,
   initialState,
@@ -37,6 +38,15 @@ function stepFromHash(): number | null {
 }
 
 export default function EisklarApp() {
+  return (
+    <LangProvider>
+      <EisklarAppInner />
+    </LangProvider>
+  );
+}
+
+function EisklarAppInner() {
+  const t = useT();
   const [state, setState] = useState<EisklarState>(initialState);
   const [mounted, setMounted] = useState(false);
   const autoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -118,18 +128,18 @@ export default function EisklarApp() {
   const answerQuiz = useCallback(
     (qi: number, key: "A" | "B" | "C") => {
       setState((s) => ({ ...s, answers: { ...s.answers, [qi]: key } }));
-      if (key === QUIZ[qi].right && qi === QUIZ.length - 1) {
+      if (key === t.QUIZ[qi].right && qi === t.QUIZ.length - 1) {
         if (autoTimer.current) clearTimeout(autoTimer.current);
         autoTimer.current = setTimeout(() => goTo(clampStep(8 + qi) + 1), 1300);
       }
     },
-    [goTo]
+    [goTo, t]
   );
 
   const name = STEPS[state.step];
   const progress = Math.round((state.step / lastStep) * 100);
   const stepLabel = `${state.step}/${lastStep}`;
-  const allPrep = PREP.every((p) => state.prep[p.k]);
+  const allPrep = t.PREP.every((p) => state.prep[p.k]);
 
   function renderScreen() {
     switch (name) {
@@ -193,6 +203,8 @@ export default function EisklarApp() {
   // Vor dem Mount immer den Intro-Screen rendern (deckt sich mit SSR,
   // verhindert Hydration-Mismatch). Danach ggf. gespeicherten Schritt zeigen.
   const showIntro = !mounted || name === "intro";
+  // Burger-Menue nur auf dem ersten (Intro) und letzten (Done) Screen.
+  const showMenu = showIntro || name === "done";
 
   return (
     <div className="app-shell">
@@ -209,13 +221,15 @@ export default function EisklarApp() {
             {renderScreen()}
           </div>
         )}
-        <AppMenu
-          open={state.menu}
-          onToggle={toggleMenu}
-          onClose={closeMenu}
-          onOpenInfo={openDrawer}
-          onPhoto={showIntro}
-        />
+        {showMenu && (
+          <AppMenu
+            open={state.menu}
+            onToggle={toggleMenu}
+            onClose={closeMenu}
+            onOpenInfo={openDrawer}
+            onPhoto={showIntro}
+          />
+        )}
         <SourcesDrawer open={state.drawer} onClose={closeDrawer} />
       </main>
     </div>

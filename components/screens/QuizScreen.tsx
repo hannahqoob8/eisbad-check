@@ -1,6 +1,6 @@
 "use client";
 
-import { QUIZ } from "@/lib/content";
+import { useT } from "@/lib/i18n";
 
 type Props = {
   index: number; // 0-basierter Quiz-Index
@@ -10,14 +10,15 @@ type Props = {
 };
 
 export default function QuizScreen({ index, picked, onAnswer, onNext }: Props) {
-  const q = QUIZ[index];
+  const t = useT();
+  const q = t.QUIZ[index];
   const correct = picked === q.right;
-  const isLast = index === QUIZ.length - 1;
+  const isLast = index === t.QUIZ.length - 1;
 
   return (
     <>
       <div className="mono-label" style={{ marginTop: 22, letterSpacing: "0.14em" }}>
-        KURZCHECK · FRAGE {index + 1} VON 3
+        {t.quiz.kicker} {index + 1} {t.quiz.of}
       </div>
       <h2 className="quiz-q">{q.q}</h2>
 
@@ -48,7 +49,7 @@ export default function QuizScreen({ index, picked, onAnswer, onNext }: Props) {
             role="status"
           >
             <div className="feedback-title">
-              {correct ? "Richtig" : "Noch einmal"}
+              {correct ? t.quiz.correct : t.quiz.wrong}
             </div>
             <p className="feedback-text">{correct ? q.ok : q.no}</p>
           </div>
@@ -61,7 +62,7 @@ export default function QuizScreen({ index, picked, onAnswer, onNext }: Props) {
           disabled={!correct}
           aria-disabled={!correct}
         >
-          {isLast ? "Zum Abschluss" : "Nächste Frage"}
+          {isLast ? t.quiz.ctaFinish : t.quiz.ctaNext}
         </button>
       </div>
     </>

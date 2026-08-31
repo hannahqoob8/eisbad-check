@@ -1,6 +1,6 @@
 "use client";
 
-import { HEALTH } from "@/lib/content";
+import { useT } from "@/lib/i18n";
 import type { Risk } from "@/lib/state";
 
 type Props = {
@@ -20,19 +20,17 @@ export default function HealthScreen({
   onPickRisk,
   onNext,
 }: Props) {
-  const openCard = HEALTH.find((h) => h.k === open) ?? null;
+  const t = useT();
+  const openCard = t.HEALTH.find((h) => h.k === open) ?? null;
 
   return (
     <>
       <h2 className="h2">
-        Erst checken.{" "}
+        {t.health.h2a}{" "}
         <br />
-        Dann starten.
+        {t.health.h2b}
       </h2>
-      <p className="lead">
-        Bestimmte gesundheitliche Situationen solltest Du vor dem Eisbaden
-        ärztlich abklären.
-      </p>
+      <p className="lead">{t.health.lead}</p>
 
       {openCard && (
         <div className="explain">
@@ -43,7 +41,7 @@ export default function HealthScreen({
 
       <div className="scroll">
         <div className="chip-grid">
-          {HEALTH.map((h) => (
+          {t.HEALTH.map((h) => (
             <button
               key={h.k}
               type="button"
@@ -58,7 +56,7 @@ export default function HealthScreen({
       </div>
 
       <div className="foot foot-stack">
-        <div className="flow-question">Trifft etwas davon auf Dich zu?</div>
+        <div className="flow-question">{t.health.flowQuestion}</div>
         <div className="choice-row">
           <button
             type="button"
@@ -66,7 +64,7 @@ export default function HealthScreen({
             aria-pressed={risk === "none"}
             onClick={onPickNoRisk}
           >
-            Nein, nichts davon
+            {t.health.choiceNo}
           </button>
           <button
             type="button"
@@ -74,22 +72,19 @@ export default function HealthScreen({
             aria-pressed={risk === "risk"}
             onClick={onPickRisk}
           >
-            Ja oder unsicher
+            {t.health.choiceYes}
           </button>
         </div>
 
         {risk === "risk" && (
           <div className="warnbox" role="status">
-            <div className="warnbox-title">Erst klären, dann starten.</div>
-            <p className="warnbox-text">
-              Du kannst den Guide weiter ansehen. Sprich vor Deinem ersten Eisbad
-              aber bitte mit Deinem Arzt oder Deiner Ärztin.
-            </p>
+            <div className="warnbox-title">{t.health.warnTitle}</div>
+            <p className="warnbox-text">{t.health.warnText}</p>
           </div>
         )}
 
         <button type="button" className="btn btn-primary" onClick={onNext}>
-          {risk === "risk" ? "Guide trotzdem ansehen" : "Weiter"}
+          {risk === "risk" ? t.health.ctaAnyway : t.health.ctaNext}
         </button>
       </div>
     </>

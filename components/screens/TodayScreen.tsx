@@ -1,6 +1,6 @@
 "use client";
 
-import { TODAY } from "@/lib/content";
+import { useT } from "@/lib/i18n";
 import type { Today } from "@/lib/state";
 
 type Props = {
@@ -16,12 +16,13 @@ export default function TodayScreen({
   onPickStop,
   onNext,
 }: Props) {
+  const t = useT();
   return (
     <>
-      <h2 className="h2 h2--sm">Manchmal ist nicht heute der richtige Tag.</h2>
+      <h2 className="h2 h2--sm">{t.today.h2}</h2>
 
       <div className="scroll stack-9">
-        {TODAY.map((c) => (
+        {t.TODAY.map((c) => (
           <div key={c.label} className="card">
             <div className="card-title">{c.label}</div>
             <p className="card-text">{c.text}</p>
@@ -30,7 +31,7 @@ export default function TodayScreen({
       </div>
 
       <div className="foot foot-stack">
-        <div className="flow-question">Trifft heute etwas davon auf Dich zu?</div>
+        <div className="flow-question">{t.today.flowQuestion}</div>
         <div className="choice-row">
           <button
             type="button"
@@ -38,7 +39,7 @@ export default function TodayScreen({
             aria-pressed={today === "fit"}
             onClick={onPickFit}
           >
-            Nein, nichts davon
+            {t.today.choiceNo}
           </button>
           <button
             type="button"
@@ -46,22 +47,19 @@ export default function TodayScreen({
             aria-pressed={today === "stop"}
             onClick={onPickStop}
           >
-            Ja oder unsicher
+            {t.today.choiceYes}
           </button>
         </div>
 
         {today === "stop" && (
           <div className="warnbox" role="status">
-            <div className="warnbox-title">Heute lieber pausieren.</div>
-            <p className="warnbox-text">
-              Du kannst den Guide abschließen, solltest heute aber kein Eisbad
-              starten.
-            </p>
+            <div className="warnbox-title">{t.today.warnTitle}</div>
+            <p className="warnbox-text">{t.today.warnText}</p>
           </div>
         )}
 
         <button type="button" className="btn btn-primary" onClick={onNext}>
-          Weiter
+          {t.today.ctaNext}
         </button>
       </div>
     </>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { Risk, Today } from "@/lib/state";
+import { useT } from "@/lib/i18n";
 import CertificateDialog from "../CertificateDialog";
 
 type Props = {
@@ -9,35 +10,17 @@ type Props = {
   today: Today;
 };
 
-function variant(risk: Risk, today: Today) {
-  if (today === "stop") {
-    return {
-      headline: "Fertig! Heute noch kein Eisbad.",
-      text: "Du kennst die wichtigsten Sicherheitsregeln. Warte mit dem Eisbad, bis Du Dich wieder vollständig fit fühlst.",
-      achievement: "Eisbadwissen abgeschlossen",
-      achievementSub: "Heute kein Eisbad starten",
-    };
-  }
-  if (risk === "risk") {
-    return {
-      headline: "Fertig! Vorher noch ärztlich abklären.",
-      text: "Du kennst jetzt die wichtigsten Sicherheitsregeln. Kläre vor der Anwendung bitte noch Deine persönliche gesundheitliche Situation medizinisch ab.",
-      achievement: "Eisbadwissen abgeschlossen",
-      achievementSub: "Vor der Anwendung ärztlich abklären",
-    };
-  }
-  return {
-    headline: "Fertig! Du bist bereit für Dein Eisbad.",
-    text: "Du kennst jetzt die wichtigsten Grundlagen für einen kontrollierten Einstieg ins Eisbaden.",
-    achievement: "Eisbademeister",
-    achievementSub: "Grundlagen abgeschlossen",
-  };
-}
-
 export default function DoneScreen({ risk, today }: Props) {
+  const t = useT();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
-  const v = variant(risk, today);
+
+  const v =
+    today === "stop"
+      ? t.done.stop
+      : risk === "risk"
+        ? t.done.risk
+        : t.done.ready;
 
   return (
     <>
@@ -56,7 +39,7 @@ export default function DoneScreen({ risk, today }: Props) {
         <div className="done-achievement">
           <span className="achievement-check">{v.achievement}</span>
           <span className="achievement-note">
-            {`${v.achievementSub}. Dieser Wissensabschluss ist keine medizinische Freigabe.`}
+            {`${v.achievementSub}. ${t.done.notMedicalRelease}`}
           </span>
         </div>
       </div>
@@ -64,7 +47,7 @@ export default function DoneScreen({ risk, today }: Props) {
       <div className="foot done-foot">
         {downloaded && (
           <div className="saved-line" role="status">
-            Teilnahmebestätigung heruntergeladen.
+            {t.done.downloadedLine}
           </div>
         )}
         <button
@@ -72,10 +55,10 @@ export default function DoneScreen({ risk, today }: Props) {
           className="btn btn-primary btn-52"
           onClick={() => setDialogOpen(true)}
         >
-          Zertifikat runterladen
+          {t.done.ctaDownload}
         </button>
         <p className="powered-by">
-          Powered by{" "}
+          {t.done.poweredBy}{" "}
           <a href="https://qoob8.com" target="_blank" rel="noopener noreferrer">
             qoob8
           </a>

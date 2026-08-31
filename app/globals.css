@@ -337,6 +337,31 @@ a:hover { color: var(--green); }
   letter-spacing: 0.08em;
   color: rgba(255, 255, 255, 0.62);
 }
+.intro-lang {
+  appearance: none;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 2px;
+  padding: 7px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  font: 500 12px/1 var(--font-grotesk);
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.92);
+  transition: background 0.16s ease, border-color 0.16s ease;
+}
+.intro-lang span { font-size: 14px; line-height: 1; }
+.intro-lang:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.44);
+}
+.intro-lang:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
 
 /* ---------------- Karten & Chips ---------------- */
@@ -1150,6 +1175,7 @@ a:hover { color: var(--green); }
   .intro-text { font-size: 16px; line-height: 1.55; }
   .intro-cta-wrap { max-width: 340px; }
   .intro-initiative { text-align: left; }
+  .intro-lang { align-self: flex-start; }
 }
 
 @media (min-width: 1240px) {

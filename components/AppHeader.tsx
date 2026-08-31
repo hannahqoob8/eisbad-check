@@ -1,5 +1,7 @@
 "use client";
 
+import { useT } from "@/lib/i18n";
+
 type Props = {
   progress: number; // 0..100
   stepLabel: string;
@@ -7,9 +9,15 @@ type Props = {
 };
 
 export default function AppHeader({ progress, stepLabel, onBack }: Props) {
+  const t = useT();
   return (
     <div className="hdr">
-      <button type="button" className="hdr-back" aria-label="Zurück" onClick={onBack}>
+      <button
+        type="button"
+        className="hdr-back"
+        aria-label={t.header.back}
+        onClick={onBack}
+      >
         ←
       </button>
       <div
@@ -18,7 +26,7 @@ export default function AppHeader({ progress, stepLabel, onBack }: Props) {
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={Math.round(progress)}
-        aria-label="Fortschritt"
+        aria-label={t.header.progress}
       >
         <div className="hdr-fill" style={{ width: `${progress}%` }} />
       </div>

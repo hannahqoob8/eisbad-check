@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useT } from "@/lib/i18n";
 
 type Props = {
   open: boolean;
@@ -17,6 +18,7 @@ export default function AppMenu({
   onOpenInfo,
   onPhoto = false,
 }: Props) {
+  const t = useT();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -44,7 +46,7 @@ export default function AppMenu({
       <button
         type="button"
         className="app-menu-btn"
-        aria-label="Menü"
+        aria-label={t.menu.label}
         aria-haspopup="true"
         aria-expanded={open}
         onClick={onToggle}
@@ -64,13 +66,13 @@ export default function AppMenu({
               onOpenInfo();
             }}
           >
-            Quellen &amp; medizinische Hinweise
+            {t.menu.sources}
           </button>
           <a role="menuitem" href="impressum/" onClick={onClose}>
-            Impressum
+            {t.menu.impressum}
           </a>
           <a role="menuitem" href="datenschutz/" onClick={onClose}>
-            Datenschutz
+            {t.menu.datenschutz}
           </a>
 
           <div className="app-menu-sep" aria-hidden="true" />
@@ -82,7 +84,7 @@ export default function AppMenu({
             target="_blank"
             rel="noopener noreferrer"
           >
-            Mehr über Eisbaden erfahren
+            {t.menu.learnMore}
           </a>
           <a
             role="menuitem"
@@ -91,10 +93,10 @@ export default function AppMenu({
             target="_blank"
             rel="noopener noreferrer"
           >
-            Eisbad kaufen
+            {t.menu.shop}
           </a>
 
-          <div className="app-menu-brand">Eine Initiative von qoob8</div>
+          <div className="app-menu-brand">{t.menu.brand}</div>
         </div>
       )}
     </div>

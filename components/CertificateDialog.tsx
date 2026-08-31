@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useLang } from "@/lib/i18n";
 import Certificate from "./Certificate";
 
 type Props = {
@@ -12,8 +13,15 @@ type Props = {
 
 const STORE_KEY = "eisklar-cert-v1";
 
-function todayDe(): string {
+function formatDate(lang: "de" | "en"): string {
   const d = new Date();
+  if (lang === "en") {
+    return new Intl.DateTimeFormat("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }).format(d);
+  }
   const p = (n: number) => String(n).padStart(2, "0");
   return `${p(d.getDate())}.${p(d.getMonth() + 1)}.${d.getFullYear()}`;
 }
@@ -21,6 +29,8 @@ function todayDe(): string {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function CertificateDialog({ open, onClose, onGenerated }: Props) {
+  const { lang, t } = useLang();
+  const c = t.certDialog;
   const [mounted, setMounted] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -35,30 +45,30 @@ export default function CertificateDialog({ open, onClose, onGenerated }: Props)
     if (!open) return;
     setError(null);
     setBusy(false);
-    const t = setTimeout(() => nameRef.current?.focus(), 40);
+    const timer = setTimeout(() => nameRef.current?.focus(), 40);
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape" && !busy) onClose();
     }
     document.addEventListener("keydown", onKey);
     return () => {
-      clearTimeout(t);
+      clearTimeout(timer);
       document.removeEventListener("keydown", onKey);
     };
   }, [open, busy, onClose]);
 
   if (!mounted || !open) return null;
 
-  const dateStr = todayDe();
+  const dateStr = formatDate(lang);
 
   async function generate() {
     const trimmedName = name.trim().replace(/\s+/g, " ");
     if (trimmedName.length < 2) {
-      setError("Bitte gib Deinen vollständigen Namen ein.");
+      setError(c.errName);
       nameRef.current?.focus();
       return;
     }
     if (!EMAIL_RE.test(email.trim())) {
-      setError("Bitte gib eine gültige E-Mail-Adresse ein.");
+      setError(c.errEmail);
       return;
     }
 
@@ -70,7 +80,12 @@ export default function CertificateDialog({ open, onClose, onGenerated }: Props)
       try {
         localStorage.setItem(
           STORE_KEY,
-          JSON.stringify({ name: trimmedName, email: email.trim(), date: dateStr })
+          JSON.stringify({
+            name: trimmedName,
+            email: email.trim(),
+            date: dateStr,
+            lang,
+          })
         );
       } catch {
         /* ignore */
@@ -102,13 +117,11 @@ export default function CertificateDialog({ open, onClose, onGenerated }: Props)
       // Seitenverhaeltnis des Sheets auf die A4-Breite skalieren.
       const imgH = (canvas.height / canvas.width) * pageW;
       pdf.addImage(img, "JPEG", 0, 0, pageW, Math.min(imgH, pageH));
-      pdf.save("eisklar-teilnahmebestaetigung.pdf");
+      pdf.save(c.pdfFilename);
 
       onGenerated();
     } catch {
-      setError(
-        "Das PDF konnte nicht erstellt werden. Bitte versuche es noch einmal."
-      );
+      setError(c.errPdf);
       setBusy(false);
     }
   }
@@ -125,14 +138,14 @@ export default function CertificateDialog({ open, onClose, onGenerated }: Props)
           className="cert-modal"
           role="dialog"
           aria-modal="true"
-          aria-label="Zertifikat herunterladen"
+          aria-label={c.title}
         >
           <div className="cert-modal-head">
-            <h3 className="cert-modal-title">Zertifikat herunterladen</h3>
+            <h3 className="cert-modal-title">{c.title}</h3>
             <button
               type="button"
               className="drawer-close"
-              aria-label="Schließen"
+              aria-label={c.close}
               onClick={onClose}
               disabled={busy}
             >
@@ -140,30 +153,28 @@ export default function CertificateDialog({ open, onClose, onGenerated }: Props)
             </button>
           </div>
 
-          <p className="cert-modal-text">
-            Trag Deinen Namen ein — er erscheint auf der Teilnahmebestätigung.
-          </p>
+          <p className="cert-modal-text">{c.text}</p>
 
           <label className="cert-field">
-            <span>Vor- und Nachname</span>
+            <span>{c.nameLabel}</span>
             <input
               ref={nameRef}
               type="text"
               autoComplete="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Vorname Nachname"
+              placeholder={c.namePlaceholder}
             />
           </label>
 
           <label className="cert-field">
-            <span>E-Mail-Adresse</span>
+            <span>{c.emailLabel}</span>
             <input
               type="email"
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="name@beispiel.de"
+              placeholder={c.emailPlaceholder}
             />
           </label>
 
@@ -179,16 +190,15 @@ export default function CertificateDialog({ open, onClose, onGenerated }: Props)
             onClick={generate}
             disabled={busy}
           >
-            {busy ? "PDF wird erstellt …" : "Zertifikat erstellen"}
+            {busy ? c.ctaBusy : c.ctaIdle}
           </button>
 
           <p className="cert-modal-fine">
-            Name und E-Mail werden aktuell nur lokal in Deinem Browser
-            gespeichert und nicht übermittelt. Mehr dazu in der{" "}
+            {c.fine1}
             <a href="datenschutz/" target="_blank" rel="noopener noreferrer">
-              Datenschutzerklärung
+              {c.fineLink}
             </a>
-            .
+            {c.fine2}
           </p>
         </div>
       </div>
@@ -204,7 +214,13 @@ export default function CertificateDialog({ open, onClose, onGenerated }: Props)
           pointerEvents: "none",
         }}
       >
-        <Certificate ref={sheetRef} name={name.trim() || "Vorname Nachname"} dateStr={dateStr} />
+        <Certificate
+          ref={sheetRef}
+          name={name.trim() || c.fallbackName}
+          dateStr={dateStr}
+          cert={t.CERT}
+          dateLabel={c.dateLabel}
+        />
       </div>
     </>,
     document.body

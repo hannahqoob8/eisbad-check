@@ -1,21 +1,22 @@
 "use client";
 
-import { ENTRY_STEPS, ENTRY_WARN, ENTRY_CALM } from "@/lib/content";
+import { useT } from "@/lib/i18n";
 
 type Props = { onNext: () => void };
 
 export default function EntryScreen({ onNext }: Props) {
+  const t = useT();
   return (
     <>
       <h2 className="h2 h2--lg">
-        Langsam rein.{" "}
+        {t.entry.h2a}{" "}
         <br />
-        Kopf oben.
+        {t.entry.h2b}
       </h2>
 
       <div className="scroll">
         <div className="stack-9">
-          {ENTRY_STEPS.map((text, i) => (
+          {t.ENTRY_STEPS.map((text, i) => (
             <div key={text} className="step-card">
               <span className="step-idx">{String(i + 1).padStart(2, "0")}</span>
               <span className="step-text">{text}</span>
@@ -24,8 +25,8 @@ export default function EntryScreen({ onNext }: Props) {
         </div>
 
         <div className="memo memo-warn mt-16">
-          <p>{ENTRY_WARN}</p>
-          <p>{ENTRY_CALM}</p>
+          <p>{t.ENTRY_WARN}</p>
+          <p>{t.ENTRY_CALM}</p>
         </div>
       </div>
 
@@ -34,7 +35,7 @@ export default function EntryScreen({ onNext }: Props) {
         className="btn btn-primary foot mt-16"
         onClick={onNext}
       >
-        Ich behalte die Kontrolle
+        {t.entry.cta}
       </button>
     </>
   );
