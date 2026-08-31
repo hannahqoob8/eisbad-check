@@ -337,31 +337,6 @@ a:hover { color: var(--green); }
   letter-spacing: 0.08em;
   color: rgba(255, 255, 255, 0.62);
 }
-.intro-lang {
-  appearance: none;
-  align-self: center;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  margin-top: 2px;
-  padding: 7px 13px;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  cursor: pointer;
-  font: 500 12px/1 var(--font-grotesk);
-  letter-spacing: 0.01em;
-  color: rgba(255, 255, 255, 0.92);
-  transition: background 0.16s ease, border-color 0.16s ease;
-}
-.intro-lang span { font-size: 14px; line-height: 1; }
-.intro-lang:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.44);
-}
-.intro-lang:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
 
 /* ---------------- Karten & Chips ---------------- */
@@ -883,7 +858,31 @@ a:hover { color: var(--green); }
   top: 16px;
   right: 16px;
   z-index: 15;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
+/* Sprachpille - nur auf dem Intro-Screen, links neben dem Burger */
+.app-menu-lang {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 13px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  font: 500 12px/1 var(--font-grotesk);
+  letter-spacing: 0.01em;
+  color: #fff;
+  white-space: nowrap;
+}
+.app-menu-lang span { font-size: 14px; line-height: 1; }
+.app-menu-lang:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 .app-menu-btn {
   appearance: none;
   display: flex;
@@ -947,18 +946,14 @@ a:hover { color: var(--green); }
   font: 500 13.5px/1.3 var(--font-grotesk);
   color: var(--ink);
   text-decoration: none;
-  transition: background 0.14s ease;
 }
-.app-menu-panel a:hover,
-.app-menu-panel button:hover { background: var(--green-tint-10); color: var(--green); }
 .app-menu-panel a:focus-visible,
-.app-menu-panel button:focus-visible { outline: 2px solid var(--green); outline-offset: -2px; }
+.app-menu-panel button:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
 .app-menu-sep {
   height: 1px;
   margin: 5px 8px;
   background: var(--line);
 }
-.app-menu-shop { color: var(--green) !important; }
 .app-menu-brand {
   padding: 8px 12px 4px;
   font: 400 10.5px/1.4 var(--font-mono);
@@ -1175,7 +1170,6 @@ a:hover { color: var(--green); }
   .intro-text { font-size: 16px; line-height: 1.55; }
   .intro-cta-wrap { max-width: 340px; }
   .intro-initiative { text-align: left; }
-  .intro-lang { align-self: flex-start; }
 }
 
 @media (min-width: 1240px) {

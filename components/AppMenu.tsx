@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useT } from "@/lib/i18n";
+import { useLang } from "@/lib/i18n";
 
 type Props = {
   open: boolean;
   onToggle: () => void;
   onClose: () => void;
   onOpenInfo: () => void; // oeffnet den Quellen-/Hinweise-Drawer
-  onPhoto?: boolean; // true auf dem Intro-Foto -> helle Darstellung
+  onPhoto?: boolean; // true auf dem Intro-Foto -> helle Darstellung + Sprachpille
 };
 
 export default function AppMenu({
@@ -18,7 +18,7 @@ export default function AppMenu({
   onOpenInfo,
   onPhoto = false,
 }: Props) {
-  const t = useT();
+  const { t, toggleLang } = useLang();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -43,6 +43,18 @@ export default function AppMenu({
       className={`app-menu${onPhoto ? " app-menu--on-photo" : ""}`}
       ref={ref}
     >
+      {onPhoto && (
+        <button
+          type="button"
+          className="app-menu-lang"
+          onClick={toggleLang}
+          aria-label={t.intro.switchAria}
+        >
+          <span aria-hidden="true">{t.intro.switchFlag}</span>
+          {t.intro.switchLabel}
+        </button>
+      )}
+
       <button
         type="button"
         className="app-menu-btn"
@@ -58,6 +70,25 @@ export default function AppMenu({
 
       {open && (
         <div className="app-menu-panel" role="menu">
+          <a
+            role="menuitem"
+            href="https://qoob8.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {t.menu.learnMore}
+          </a>
+          <a
+            role="menuitem"
+            href="https://qoob8.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {t.menu.shop}
+          </a>
+
+          <div className="app-menu-sep" aria-hidden="true" />
+
           <button
             type="button"
             role="menuitem"
@@ -73,27 +104,6 @@ export default function AppMenu({
           </a>
           <a role="menuitem" href="datenschutz/" onClick={onClose}>
             {t.menu.datenschutz}
-          </a>
-
-          <div className="app-menu-sep" aria-hidden="true" />
-
-          <a
-            role="menuitem"
-            className="app-menu-shop"
-            href="https://qoob8.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {t.menu.learnMore}
-          </a>
-          <a
-            role="menuitem"
-            className="app-menu-shop"
-            href="https://qoob8.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {t.menu.shop}
           </a>
 
           <div className="app-menu-brand">{t.menu.brand}</div>

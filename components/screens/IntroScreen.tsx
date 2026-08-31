@@ -1,13 +1,13 @@
 "use client";
 
-import { useLang } from "@/lib/i18n";
+import { useT } from "@/lib/i18n";
 
 type Props = {
   onNext: () => void;
 };
 
 export default function IntroScreen({ onNext }: Props) {
-  const { t, toggleLang } = useLang();
+  const t = useT();
 
   return (
     <div className="intro">
@@ -35,15 +35,6 @@ export default function IntroScreen({ onNext }: Props) {
               {t.intro.cta}
             </button>
             <p className="intro-initiative">{t.intro.initiative}</p>
-            <button
-              type="button"
-              className="intro-lang"
-              onClick={toggleLang}
-              aria-label={t.intro.switchAria}
-            >
-              <span aria-hidden="true">{t.intro.switchFlag}</span>
-              {t.intro.switchLabel}
-            </button>
           </div>
         </div>
       </div>
