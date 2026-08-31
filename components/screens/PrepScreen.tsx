@@ -13,7 +13,7 @@ export default function PrepScreen({ prep, allPrep, onToggle, onNext }: Props) {
   return (
     <>
       <h2 className="h2">
-        Erst vorbereiten.
+        Erst vorbereiten.{" "}
         <br />
         Dann eintauchen.
       </h2>

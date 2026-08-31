@@ -8,7 +8,7 @@ export default function EntryScreen({ onNext }: Props) {
   return (
     <>
       <h2 className="h2 h2--lg">
-        Langsam rein.
+        Langsam rein.{" "}
         <br />
         Kopf oben.
       </h2>

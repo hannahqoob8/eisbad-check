@@ -11,6 +11,11 @@ export default function BodyScreen({ onNext }: Props) {
   return (
     <>
       <h2 className="h2 h2--lg">Die Kälte wirkt sofort.</h2>
+      <p className="lead">
+        Der erste Moment ist besonders intensiv. Steige langsam ein, halte
+        Deinen Kopf über Wasser und konzentriere Dich auf eine ruhige, lange
+        Ausatmung.
+      </p>
 
       <div className="scroll">
         <div className="breath" aria-hidden="true">
@@ -36,12 +41,6 @@ export default function BodyScreen({ onNext }: Props) {
             </div>
           ))}
         </div>
-
-        <p className="keybox">
-          Der erste Moment ist besonders intensiv. Steige langsam ein, halte
-          Deinen Kopf über Wasser und konzentriere Dich auf eine ruhige, lange
-          Ausatmung.
-        </p>
       </div>
 
       <button

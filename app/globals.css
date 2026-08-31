@@ -572,15 +572,6 @@ a:hover { color: var(--green); }
   animation: fadeup 0.5s ease both;
 }
 .reveal-row:last-child { border-bottom: 0; }
-.keybox {
-  margin: 16px 0 0;
-  padding: 14px 16px;
-  border-radius: 14px;
-  background: var(--calm);
-  font: 500 13.5px/1.5 var(--font-grotesk);
-  color: var(--ink);
-  text-wrap: pretty;
-}
 
 /* Waehrend des Eisbads: Panels */
 .panel {
@@ -1061,7 +1052,11 @@ a:hover { color: var(--green); }
   .h2 { margin-top: 8px; font-size: 34px; }
   .h2--lg { font-size: 37px; }
   .h2-done { font-size: 36px; }
-  .lead { font-size: 14.5px; max-width: 54ch; }
+  .lead { font-size: 14.5px; max-width: 74ch; }
+
+  /* Auf Desktop mehr Breite nutzen: manuelle Zeilenumbrueche in
+     Ueberschriften ignorieren, Text laeuft in eine/wenige Zeilen */
+  .screen .h2 br { display: none; }
 
   /* Listen mehrspaltig -> vertikal kuerzer */
   .scroll.stack-9,
@@ -1113,9 +1108,14 @@ a:hover { color: var(--green); }
   .screen--body .scroll { max-width: 560px; align-self: center; }
   .screen--body .breath { height: 168px; }
 
-  /* Done: klassische, schmalere Abschlussseite */
-  .screen.screen--done { max-width: 660px; }
-  .screen--done .done-hero { height: 300px; }
+  /* Done: klassische, schmalere Abschlussseite; kompakt, damit alles
+     ohne Scrollen auf einen Screen passt */
+  .screen.screen--done { max-width: 660px; padding-top: 18px; padding-bottom: 32px; }
+  .screen--done .hdr { margin-bottom: 14px; }
+  .screen--done .done-hero { height: 210px; margin-top: 6px; }
+  .screen--done .h2-done { margin: 14px 0 8px; }
+  .screen--done .lead { margin-bottom: 12px; }
+  .screen--done .done-achievement { margin-top: 14px; padding-top: 12px; }
 
   /* Menue + Drawer an den Viewport heften */
   .app-menu {

@@ -25,7 +25,7 @@ export default function HealthScreen({
   return (
     <>
       <h2 className="h2">
-        Erst checken.
+        Erst checken.{" "}
         <br />
         Dann starten.
       </h2>
