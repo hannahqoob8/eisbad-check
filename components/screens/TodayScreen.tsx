@@ -38,7 +38,7 @@ export default function TodayScreen({
             aria-pressed={today === "fit"}
             onClick={onPickFit}
           >
-            Nein, ich bin fit
+            Nein, nichts davon
           </button>
           <button
             type="button"
