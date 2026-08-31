@@ -30,9 +30,8 @@ export default function HealthScreen({
         Dann starten.
       </h2>
       <p className="lead">
-        Eisbaden ist ein intensiver Reiz für Deinen Körper. Bestimmte
-        gesundheitliche Situationen solltest Du deshalb vorab medizinisch
-        abklären.
+        Bestimmte gesundheitliche Situationen solltest Du vor dem Eisbaden
+        ärztlich abklären.
       </p>
 
       {openCard && (
@@ -60,22 +59,24 @@ export default function HealthScreen({
 
       <div className="foot foot-stack">
         <div className="flow-question">Trifft etwas davon auf Dich zu?</div>
-        <button
-          type="button"
-          className={`choice${risk === "none" ? " sel-green" : ""}`}
-          aria-pressed={risk === "none"}
-          onClick={onPickNoRisk}
-        >
-          Nichts davon trifft auf mich zu
-        </button>
-        <button
-          type="button"
-          className={`choice${risk === "risk" ? " sel-orange" : ""}`}
-          aria-pressed={risk === "risk"}
-          onClick={onPickRisk}
-        >
-          Etwas trifft zu oder ich bin unsicher
-        </button>
+        <div className="choice-row">
+          <button
+            type="button"
+            className={`choice${risk === "none" ? " sel-green" : ""}`}
+            aria-pressed={risk === "none"}
+            onClick={onPickNoRisk}
+          >
+            Nein, nichts davon
+          </button>
+          <button
+            type="button"
+            className={`choice${risk === "risk" ? " sel-orange" : ""}`}
+            aria-pressed={risk === "risk"}
+            onClick={onPickRisk}
+          >
+            Ja oder unsicher
+          </button>
+        </div>
 
         {risk === "risk" && (
           <div className="warnbox" role="status">

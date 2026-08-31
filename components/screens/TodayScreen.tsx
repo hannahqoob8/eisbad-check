@@ -38,7 +38,7 @@ export default function TodayScreen({
             aria-pressed={today === "fit"}
             onClick={onPickFit}
           >
-            Nein, ich fühle mich fit
+            Nein, ich bin fit
           </button>
           <button
             type="button"
@@ -46,7 +46,7 @@ export default function TodayScreen({
             aria-pressed={today === "stop"}
             onClick={onPickStop}
           >
-            Ja oder ich bin unsicher
+            Ja oder unsicher
           </button>
         </div>
 

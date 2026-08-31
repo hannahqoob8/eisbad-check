@@ -91,8 +91,6 @@ a:hover { color: var(--green); }
 .app-shell {
   min-height: 100vh;
   min-height: 100dvh;
-  display: flex;
-  justify-content: center;
   background: var(--bg);
 }
 .app {
@@ -127,10 +125,10 @@ a:hover { color: var(--green); }
   gap: 9px;
   padding-top: 16px;
 }
-/* Health: Entscheidung klarer vom Themen-Raster absetzen */
+/* Health: Entscheidung klar vom Themen-Raster absetzen */
 .screen--health .foot-stack {
-  gap: 12px;
-  padding-top: 22px;
+  gap: 10px;
+  padding-top: 16px;
 }
 .screen--health .foot-stack .flow-question {
   margin-bottom: 2px;
@@ -271,8 +269,10 @@ a:hover { color: var(--green); }
 
 /* ---------------- Intro-Screen ---------------- */
 .intro {
-  position: absolute;
+  position: fixed;
   inset: 0;
+  z-index: 5;
+  background: #0c0f10;
 }
 .intro-img {
   position: absolute;
@@ -379,8 +379,19 @@ a:hover { color: var(--green); }
 .chip-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px 10px;
+  gap: 10px 8px;
 }
+
+/* Today: Karten kompakt, auf Mobil 2x2 (kein Scrollen) */
+.screen--today .scroll.stack-9 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  align-content: start;
+}
+.screen--today .card { padding: 12px 13px; }
+.screen--today .card-title { margin-bottom: 4px; }
+.screen--today .card-text { font-size: 12px; line-height: 1.4; }
 .chip {
   appearance: none;
   cursor: pointer;
@@ -527,7 +538,7 @@ a:hover { color: var(--green); }
 /* Body-Screen: Atemflaeche + Zeilen */
 .breath {
   position: relative;
-  height: 150px;
+  height: 136px;
   border-radius: 16px;
   background: var(--surface);
   border: 1px solid var(--line);
@@ -1069,16 +1080,11 @@ a:hover { color: var(--green); }
   }
   .chip-grid { grid-template-columns: repeat(3, 1fr); }
 
-  /* Health: Auswahl + Warnbox zweispaltig */
-  .screen--health .foot-stack {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px 12px;
-    align-items: start;
-  }
-  .screen--health .foot-stack .flow-question,
-  .screen--health .foot-stack .btn-primary,
-  .screen--health .warnbox { grid-column: 1 / -1; }
+  /* CTA-Bereich immer unten am Screen -> springt zwischen Screens nicht.
+     Der Abschluss-Screen ist ausgenommen (kein wiederkehrender Weiter-Button). */
+  .screen:not(.screen--done) > .foot { margin-top: auto; }
+  .screen--health .foot-stack .choice-row,
+  .screen--health .foot-stack .warnbox { align-self: stretch; }
 
   .screen--today .choice-row { max-width: 520px; }
 
@@ -1104,17 +1110,25 @@ a:hover { color: var(--green); }
     max-width: 620px;
   }
 
-  /* Body: schmal + mittig */
-  .screen--body .scroll { max-width: 560px; align-self: center; }
-  .screen--body .breath { height: 168px; }
+  /* Body: volle Abschnittsbreite wie bei Entry, links buendig.
+     Atemflaeche links, Zeilen rechts. */
+  .screen--body .scroll {
+    max-width: none;
+    align-self: stretch;
+    display: grid;
+    grid-template-columns: minmax(280px, 360px) 1fr;
+    gap: 36px;
+    align-items: start;
+  }
+  .screen--body .breath { height: 210px; }
+  .screen--body .reveal-list { margin-top: 0; }
 
-  /* Done: klassische, schmalere Abschlussseite; kompakt, damit alles
-     ohne Scrollen auf einen Screen passt */
-  .screen.screen--done { max-width: 660px; padding-top: 18px; padding-bottom: 32px; }
+  /* Done: breiter, damit nichts umbricht und alles ohne Scrollen passt */
+  .screen.screen--done { max-width: 820px; }
   .screen--done .hdr { margin-bottom: 14px; }
-  .screen--done .done-hero { height: 210px; margin-top: 6px; }
-  .screen--done .h2-done { margin: 14px 0 8px; }
-  .screen--done .lead { margin-bottom: 12px; }
+  .screen--done .done-hero { height: 200px; margin-top: 6px; }
+  .screen--done .h2-done { margin: 14px 0 8px; font-size: 31px; }
+  .screen--done .lead { max-width: none; margin-bottom: 12px; }
   .screen--done .done-achievement { margin-top: 14px; padding-top: 12px; }
 
   /* Menue + Drawer an den Viewport heften */

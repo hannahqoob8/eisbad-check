@@ -59,19 +59,19 @@ export const HEALTH: HealthItem[] = [
 export const TODAY: TodayItem[] = [
   {
     label: "Infektion oder Fieber",
-    text: "Wenn Dein Körper bereits gegen einen Infekt arbeitet, solltest Du auf den zusätzlichen Kältereiz verzichten.",
+    text: "Bei einem laufenden Infekt keinen zusätzlichen Kältereiz.",
   },
   {
     label: "Alkohol",
-    text: "Alkohol verändert Wahrnehmung, Reaktionsfähigkeit und Kreislauf. Gehe nach Alkoholkonsum nicht ins Eisbad.",
+    text: "Alkohol verändert Wahrnehmung und Kreislauf – danach nicht ins Eisbad.",
   },
   {
     label: "Starke Erschöpfung",
-    text: "Wenn Du körperlich oder mental stark erschöpft bist, verschiebe Dein Eisbad.",
+    text: "Bei körperlicher oder mentaler Erschöpfung das Eisbad verschieben.",
   },
   {
     label: "Extreme Hitze",
-    text: "Nach einer Sauna, intensiver Hitze oder an sehr heißen Tagen kann der abrupte Temperaturwechsel Deinen Kreislauf zusätzlich belasten. Gehe besonders behutsam vor und gib Deinem Körper Zeit.",
+    text: "Nach Sauna oder an sehr heißen Tagen belastet der Temperaturwechsel den Kreislauf zusätzlich.",
   },
 ];
 

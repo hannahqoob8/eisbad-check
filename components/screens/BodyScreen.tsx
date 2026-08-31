@@ -12,9 +12,8 @@ export default function BodyScreen({ onNext }: Props) {
     <>
       <h2 className="h2 h2--lg">Die Kälte wirkt sofort.</h2>
       <p className="lead">
-        Der erste Moment ist besonders intensiv. Steige langsam ein, halte
-        Deinen Kopf über Wasser und konzentriere Dich auf eine ruhige, lange
-        Ausatmung.
+        Der erste Moment ist besonders intensiv. Steige langsam ein, halte den
+        Kopf über Wasser und atme ruhig und lang aus.
       </p>
 
       <div className="scroll">
